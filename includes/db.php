@@ -7,6 +7,11 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $password = "";
     $database = "ssarch";
     $port = 3308;
+} else {
+    $host = "localhost";
+    $username = "u404775056_ssarch";
+    $password = "Ssarchtech@11";
+    $database = "u404775056_ssarch";
 }
 
 $con = new mysqli($host, $username, $password, $database, $port);
