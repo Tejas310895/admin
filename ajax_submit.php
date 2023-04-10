@@ -162,8 +162,8 @@ if (isset($_GET['design_status_id'])) {
             $un_design_file = $data[0][0];
             $un_estimation_file = $data[0][1];
         }
-        if (file_exists("../uploads/$un_design_file") && file_exists("../uploads/$un_estimation_file")) {
-            if (unlink("../uploads/$un_design_file") && unlink("../uploads/$un_estimation_file")) {
+        if (file_exists("../images/uploads/$un_design_file") && file_exists("../images/uploads/$un_estimation_file")) {
+            if (unlink("../images/uploads/$un_design_file") && unlink("../images/uploads/$un_estimation_file")) {
                 $sql = "DELETE FROM designs_estimations WHERE lead_no='$d_e_id';";
                 $sql .= "UPDATE leads SET lead_status='design_pending',lead_updated_at=NOW() WHERE lead_no='$d_e_id'";
             }
