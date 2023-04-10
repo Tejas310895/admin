@@ -69,7 +69,7 @@
                             <tr>
                                 <td><?php echo get_sql_single_data('user_name', 'users', "user_id='$vals[5]'")[0][0]; ?></td>
                                 <td>
-                                    <a href="../uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
+                                    <a href="images.ssarchindia.com/uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-pen-fancy"></i>
                                         </span>
@@ -77,7 +77,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="../uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-primary btn-icon-split">
+                                    <a href="images.ssarchindia.com/uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-dollar-sign"></i>
                                         </span>
