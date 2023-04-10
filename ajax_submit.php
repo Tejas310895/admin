@@ -103,7 +103,7 @@ if (isset($_POST['submit_lead'])) {
 }
 
 if (isset($_POST['design_submit'])) {
-    $target_dir = "../uploads/";
+    $target_dir = "../images/uploads/";
     $design_file_name =  "D_" . random_int(10000000, 99999999) . basename($_FILES["design_file"]["name"]);
     $estimation_file_name =  "E_" . random_int(10000000, 99999999) . basename($_FILES["estimation_file"]["name"]);
     $design_file = $target_dir . $design_file_name;
