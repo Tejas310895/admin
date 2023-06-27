@@ -77,6 +77,28 @@ if (empty($_SESSION['user'])) {
                         include("project_flow.php");
                     } elseif (isset($_GET['projects'])) {
                         include("projects.php");
+                    } elseif (isset($_GET['pending_balance_sheet'])) {
+                        include("pending_balance_sheet.php");
+                    } elseif (isset($_GET['pending_procurment'])) {
+                        include("pending_procurment.php");
+                    } elseif (isset($_GET['procurment_upload'])) {
+                        include("procurment_upload.php");
+                    } elseif (isset($_GET['balance_upload'])) {
+                        include("balance_sheet_upload.php");
+                    } elseif (isset($_GET['project_expenses'])) {
+                        include("project_expenses.php");
+                    } elseif (isset($_GET['insert_expense'])) {
+                        include("insert_expense.php");
+                    } elseif (isset($_GET['pending_mesurments'])) {
+                        include("pending_mesurment.php");
+                    } elseif (isset($_GET['mesurment_upload'])) {
+                        include("mesurment_upload.php");
+                    } elseif (isset($_GET['moms'])) {
+                        include("moms.php");
+                    } elseif (isset($_GET['raise_mom'])) {
+                        include("raise_mom.php");
+                    } else {
+                        include("dashboard.php");
                     }
 
 
@@ -139,7 +161,7 @@ if (empty($_SESSION['user'])) {
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/chart/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
@@ -151,7 +173,6 @@ if (empty($_SESSION['user'])) {
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="js/scripts.js"></script>
 
 </body>

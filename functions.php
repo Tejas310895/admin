@@ -70,10 +70,10 @@ function get_lead_complete($status, $lead_no)
     }
 }
 
-function get_designs($lead_no)
+function get_docs($lead_no, $column)
 {
     require("includes/db.php");
-    $sql = "SELECT * FROM designs_estimations WHERE lead_no='$lead_no'";
+    $sql = "SELECT * FROM $column WHERE lead_no='$lead_no'";
     $results = $con->query($sql);
     if ($results->num_rows > 0) {
         return $results->fetch_all();
@@ -94,6 +94,18 @@ function  get_sql_single_data($column, $table, $where)
     }
 }
 
+function get_designs($lead_no)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM designs_estimations WHERE lead_no='$lead_no'";
+    $results = $con->query($sql);
+    if ($results->num_rows > 0) {
+        return $results->fetch_all();
+    } else {
+        return array();
+    }
+}
+
 function get_design_files($lead_no)
 {
     require("includes/db.php");
@@ -106,10 +118,10 @@ function get_design_files($lead_no)
     }
 }
 
-function get_project_complete($status, $project_no)
+function get_project_complete($project_no)
 {
     require("includes/db.php");
-    $sql = "SELECT p.project_no,p.project_name,p.project_status,p.project_updated_at,e.c_name,e.c_contact,e.c_desc FROM projects AS p INNER JOIN project_enquiries AS e ON p.project_no=e.application_no WHERE p.project_status in ($status) AND p.project_no='$project_no'";
+    $sql = "SELECT p.project_no,p.project_name,p.project_status,p.project_updated_at,e.c_name,e.c_contact,e.c_desc FROM projects AS p INNER JOIN project_enquiries AS e ON p.project_no=e.application_no WHERE p.project_no='$project_no'";
     $results = $con->query($sql);
     if ($results->num_rows > 0) {
         return $results->fetch_all();
@@ -124,11 +136,63 @@ function get_projects($status = 'ALL')
     if ($status == 'ALL') {
         $sql = "SELECT * FROM projects ORDER BY project_id DESC";
     } elseif ($status) {
-        $sql = "SELECT * FROM projects WHERE project_status='$status' ORDER BY project_id DESC";
+        $sql = "SELECT * FROM projects WHERE project_status not like '%$status%' ORDER BY project_id DESC";
     }
     $results = $con->query($sql);
     if ($results->num_rows > 0) {
         return $results->fetch_all();
+    } else {
+        return array();
+    }
+}
+
+function get_project_expenses()
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM project_expenses";
+    $results = $con->query($sql)->fetch_all();
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+
+function get_expense_flow($project_no)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM project_expenses WHERE project_no='$project_no'";
+    $results = $con->query($sql)->fetch_all();
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+
+function get_mom_details()
+{
+    require("includes/db.php");
+    $user_id = $_SESSION['user'];
+    $sql = "SELECT * FROM mom WHERE entered_by='$user_id'";
+    $results = $con->query($sql)->fetch_all();
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+
+function get_mom_pdf($mom_id)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM mom WHERE mom_id='$mom_id'";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    $results = array_shift($results);
+    $sql1 = "SELECT * FROM mom_objectives WHERE mom_id=$mom_id";
+    $results['objectives'] = $con->query($sql1)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
     } else {
         return array();
     }

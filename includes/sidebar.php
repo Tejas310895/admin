@@ -25,7 +25,7 @@
     <!-- Nav Item - PROJECT IN -->
     <li class="nav-item">
         <a class="nav-link" href="index.php?project_enquiry">
-            <i class="fas fa-fw fa-folder-plus"></i>
+            <i class="fa fa-comments"></i>
             <span>EQUIRIES</span></a>
     </li>
 
@@ -34,6 +34,20 @@
         <a class="nav-link" href="index.php?leads">
             <i class="fas fa-fw fa-folder-open"></i>
             <span>LEADS</span></a>
+    </li>
+
+    <!-- Nav Item - PROJECT IN -->
+    <li class="nav-item">
+        <a class="nav-link" href="index.php?projects">
+            <i class="fa fa-cubes"></i>
+            <span>PROJECTS</span></a>
+    </li>
+
+    <!-- Nav Item - PROJECT IN -->
+    <li class="nav-item">
+        <a class="nav-link" href="index.php?moms">
+            <i class="fa fa-sitemap"></i>
+            <span>MOM</span></a>
     </li>
 
     <!-- Divider -->
@@ -47,9 +61,23 @@
     <!-- Nav Item - PROJECT IN -->
     <li class="nav-item">
         <a class="nav-link" href="index.php?pending_designs">
-            <i class="fas fa-fw fa-folder-open"></i>
+            <i class="fa fa-object-group"></i>
             <span>DESIGNS PENDING</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="index.php?pending_balance_sheet">
+            <i class="fa fa-list-alt"></i>
+            <span>BALACE SHEET PENDING</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="index.php?project_expenses">
+            <i class="fas fa-rupee-sign"></i>
+            <span>ADD EXPENSES</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
 
     <!-- Nav Item - Pages Collapse Menu -->
     <!-- <li class="nav-item">

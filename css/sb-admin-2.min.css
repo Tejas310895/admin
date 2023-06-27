@@ -46,6 +46,10 @@
     box-sizing: border-box
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 html {
     font-family: sans-serif;
     line-height: 1.15;
@@ -11637,7 +11641,9 @@ a:focus {
 
 .sidebar.toggled {
     width: 0 !important;
-    overflow: hidden
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 .sidebar.toggled #sidebarToggle::after {
@@ -11784,8 +11790,9 @@ a:focus {
     }
 
     .sidebar.toggled {
-        overflow: visible;
-        width: 6.5rem !important
+        overflow-y: scroll;
+        width: 8rem !important;
+        height: 100vh;
     }
 
     .sidebar.toggled .nav-item .collapse {

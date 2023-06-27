@@ -1,6 +1,6 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">LEADS PANEL</h1>
+    <h1 class="h3 mb-0 text-gray-800">PROJECTS PANEL</h1>
 </div>
 
 <!-- DataTales Example -->
@@ -21,7 +21,9 @@
                 </thead>
                 <tbody>
                     <?php $counter = 0;
-                    foreach (get_projects() as $values) { ?>
+                    foreach (get_projects() as $values) {
+
+                    ?>
                         <tr>
                             <td><?php echo ++$counter; ?></td>
                             <td><?php echo $values[1]; ?></td>
@@ -39,13 +41,29 @@
                                     echo "Build";
                                 } ?>
                             </td>
-                            <td><?php if ($values[5] == 'project_initiated') {
-                                    echo "Project Initialized";
-                                }  ?>
+                            <?php
+                            $status = "";
+                            if (strpos($values[5], 'procur') == false) {
+                                $status .= 'Procurment ';
+                            } elseif (strpos($values[5], 'balance') == false) {
+                                $status .= 'Balance ';
+                            } elseif (strpos($values[5], 'mesure') == false) {
+                                $status .= 'Mesurments ';
+                            } else {
+                                $status .= 'Project Complied';
+                            }
+
+                            if (strpos($values[5], 'Complied') == false) {
+                                $status .= 'Pending';
+                            }
+
+
+                            ?>
+                            <td><?php echo ucfirst(strtolower($status));  ?>
                             </td>
                             <td>
                                 <a href="index.php?project_flow=<?php echo $values[1]; ?>" class="btn btn-info btn-circle btn-sm">
-                                    <i class="fas fa-info"></i>
+                                    <i class="fas fa-info"></i></a>
                             </td>
                         </tr>
                     <?php } ?>

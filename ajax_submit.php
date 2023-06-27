@@ -178,3 +178,285 @@ if (isset($_GET['design_status_id'])) {
         echo "<script>window.open('index.php?leads','_self')</script>";
     }
 }
+
+if (isset($_POST['procurment_submit'])) {
+    $user_id = $_SESSION['user'];
+    $target_dir = "../images/uploads/";
+    $procurment_file_name =  "P_" . random_int(10000000, 99999999) . basename($_FILES["procurment_file"]["name"]);
+    $procurment_file = $target_dir . $procurment_file_name;
+    $procurment_note = $_POST['procurment_note'];
+    $procurment_lead_no = $_POST['lead_no'];
+    $procurment_check = $_FILES["procurment_file"]["tmp_name"];
+    $sql_pre = "SELECT project_status FROM projects WHERE project_no='$procurment_lead_no'";
+    $project_array = $con->query($sql_pre)->fetch_all();
+    $project_status = $project_array[0][0];
+    $project_status .= "_procur";
+    if (!empty($procurment_check)) {
+        if (move_uploaded_file($_FILES["procurment_file"]["tmp_name"], $procurment_file)) {
+
+            $sql = "INSERT INTO procurments VALUES ('default','$procurment_lead_no','$procurment_file_name','pending','$user_id',NOW(),NOW());";
+            $sql .= "UPDATE projects SET project_status='$project_status',project_updated_at=NOW() WHERE project_no='$procurment_lead_no'";
+
+            if ($con->multi_query($sql)) {
+                echo "<script>alert('Files uploaded succesfully')</script>";
+                echo "<script>window.open('index.php?pending_procurment','_self')</script>";
+            } else {
+                echo "<script>alert('File upload failed! Try again')</script>";
+                echo "<script>window.open('index.php?procurment_upload','_self')</script>";
+            }
+        } else {
+            echo "<script>alert('File upload failed Try again')</script>";
+            echo "<script>window.open('index.php?procurment_upload=$procurment_lead_no','_self')</script>";
+        }
+    } else {
+        echo "<script>alert('File upload failed ! Try again')</script>";
+        echo "<script>window.open('index.php?procurment_upload=$procurment_lead_no','_self')</script>";
+    }
+}
+
+if (isset($_POST['balance_submit'])) {
+    $user_id = $_SESSION['user'];
+    $target_dir = "../images/uploads/";
+    $balance_file_name =  "B_" . random_int(10000000, 99999999) . basename($_FILES["balance_file"]["name"]);
+    $balance_file = $target_dir . $balance_file_name;
+    $balance_note = $_POST['balance_note'];
+    $balance_lead_no = $_POST['lead_no'];
+    $balance_check = $_FILES["balance_file"]["tmp_name"];
+    $sql_pre = "SELECT project_status FROM projects WHERE project_no='$procurment_lead_no'";
+    $project_array = $con->query($sql_pre)->fetch_all();
+    $project_status = $project_array[0][0];
+    $project_status .= "_balance";
+    if (!empty($balance_check)) {
+        if (move_uploaded_file($_FILES["balance_file"]["tmp_name"], $balance_file)) {
+
+            $sql = "INSERT INTO balance_sheets VALUES ('default','$balance_lead_no','$balance_file_name','pending','$user_id',NOW(),NOW());";
+            $sql .= "UPDATE projects SET project_status='$project_status',project_updated_at=NOW() WHERE project_no='$balance_lead_no'";
+
+            if ($con->multi_query($sql)) {
+                echo "<script>alert('Files uploaded succesfully')</script>";
+                echo "<script>window.open('index.php?pending_balance_sheet','_self')</script>";
+            } else {
+                echo "<script>alert('File upload failed! Try again')</script>";
+                echo "<script>window.open('index.php?balance_upload','_self')</script>";
+            }
+        } else {
+            echo "<script>alert('File upload failed Try again')</script>";
+            echo "<script>window.open('index.php?balance_upload=$balance_lead_no','_self')</script>";
+        }
+    } else {
+        echo "<script>alert('File upload failed ! Try again')</script>";
+        echo "<script>window.open('index.php?balance_upload=$balance_lead_no','_self')</script>";
+    }
+}
+
+if (isset($_POST['expense_submit'])) {
+    $user_id = $_SESSION['user'];
+    $target_dir = "../images/uploads/";
+    $e_project_no = $_POST['project_no'];
+    $e_expense_type = $_POST['expense_type'];
+    $e_expense_amt = $_POST['expense_amt'];
+    $e_expense_cat = $_POST['expense_cat'];
+    $expense_file_name =  "EX_" . random_int(10000000, 99999999) . basename($_FILES["expense_proof"]["name"]);
+    $expense_file = $target_dir . $expense_file_name;
+    $e_expense_proof = $_FILES["expense_proof"]["tmp_name"];
+
+    if (!empty($e_expense_proof)) {
+        if (move_uploaded_file($_FILES["expense_proof"]["tmp_name"], $expense_file)) {
+            $sql = "INSERT INTO project_expenses VALUES (default,'$e_project_no','$e_expense_type','$e_expense_amt','$expense_file_name','$e_expense_cat','$user_id',NOW(),NOW())";
+            if ($con->query($sql)) {
+                echo "<script>alert('Expenses added successfully')</script>";
+                echo "<script>window.open('index.php?project_expenses','_self')</script>";
+            } else {
+                echo "<script>alert('Operation failed! Try again')</script>";
+                echo "<script>window.open('index.php?insert_expense','_self')</script>";
+            }
+        }
+    }
+}
+
+if (isset($_POST['mesurment_submit'])) {
+    $user_id = $_SESSION['user'];
+    $target_dir = "../images/uploads/";
+    $mesurment_file_name =  "M_" . random_int(10000000, 99999999) . basename($_FILES["mesurment_file"]["name"]);
+    $mesurment_file = $target_dir . $mesurment_file_name;
+    $mesurment_note = $_POST['mesurment_note'];
+    $mesurment_lead_no = $_POST['lead_no'];
+    $mesurment_check = $_FILES["mesurment_file"]["tmp_name"];
+    $sql_pre = "SELECT project_status FROM projects WHERE project_no='$mesurment_lead_no'";
+    $project_array = $con->query($sql_pre)->fetch_all();
+    $project_status = $project_array[0][0];
+    $project_status .= "_mesure";
+    if (!empty($mesurment_check)) {
+        if (move_uploaded_file($_FILES["mesurment_file"]["tmp_name"], $mesurment_file)) {
+
+            $sql = "INSERT INTO mesurments VALUES ('default','$mesurment_lead_no','$mesurment_file_name','pending',$user_id,NOW(),NOW());";
+            $sql .= "UPDATE projects SET project_status='$project_status',project_updated_at=NOW() WHERE project_no='$mesurment_lead_no'";
+
+            if ($con->multi_query($sql)) {
+                echo "<script>alert('Files uploaded succesfully')</script>";
+                echo "<script>window.open('index.php?pending_mesurments','_self')</script>";
+            } else {
+                echo "<script>alert('File upload failed! Try again')</script>";
+                echo "<script>window.open('index.php?mesurment_upload','_self')</script>";
+            }
+        } else {
+            echo "<script>alert('File upload failed Try again')</script>";
+            echo "<script>window.open('index.php?mesurment_upload=$mesurment_lead_no','_self')</script>";
+        }
+    } else {
+        echo "<script>alert('File upload failed ! Try again')</script>";
+        echo "<script>window.open('index.php?mesurment_upload=$mesurment_lead_no','_self')</script>";
+    }
+}
+
+if (isset($_GET['procur_delete'])) {
+    $p_id = $_GET['procur_delete'];
+    $get_file_sql = "SELECT procurment_file_id FROM procurments WHERE lead_no ='$p_id'";
+    $results = $con->query($get_file_sql);
+    if ($results->num_rows > 0) {
+        $data = $results->fetch_all();
+        $un_procur_file = $data[0][0];
+    }
+    $get_file_status  = "SELECT project_status FROM projects WHERE project_no='$p_id'";
+    $status_dump = $con->query($get_file_sql);
+    if ($status_dump->num_rows > 0) {
+        $data = $status_dump->fetch_all();
+        $project_status = $data[0][0];
+    }
+    $project_status = str_replace("_procur", "", $project_status);
+    if (file_exists("../images/uploads/$un_procur_file")) {
+        if (unlink("../images/uploads/$un_procur_file")) {
+            $sql = "DELETE FROM procurments WHERE lead_no='$p_id';";
+            $sql .= "UPDATE projects SET project_status='$project_status',lead_updated_at=NOW() WHERE project_no='$p_id'";
+        }
+    }
+    if ($con->multi_query($sql)) {
+        echo "<script>alert('Deleted successfully')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    } else {
+        echo "<script>alert('Failed! Try again')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    }
+}
+
+if (isset($_GET['balance_delete'])) {
+    $b_id = $_GET['balance_delete'];
+    $get_file_sql = "SELECT balance_sheet_file FROM balance_sheets WHERE lead_no ='$b_id'";
+    $results = $con->query($get_file_sql);
+    if ($results->num_rows > 0) {
+        $data = $results->fetch_all();
+        $un_balance_file = $data[0][0];
+    }
+    $get_file_status  = "SELECT project_status FROM projects WHERE project_no='$b_id'";
+    $status_dump = $con->query($get_file_sql);
+    if ($status_dump->num_rows > 0) {
+        $data = $status_dump->fetch_all();
+        $project_status = $data[0][0];
+    }
+    $project_status = str_replace("_balance", "", $project_status);
+    if (file_exists("../images/uploads/$un_balance_file")) {
+        if (unlink("../images/uploads/$un_balance_file")) {
+            $sql = "DELETE FROM balance_sheets WHERE lead_no='$b_id';";
+            $sql .= "UPDATE projects SET project_status='$project_status',lead_updated_at=NOW() WHERE project_no='$b_id'";
+        }
+    }
+    if ($con->multi_query($sql)) {
+        echo "<script>alert('Deleted successfully')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    } else {
+        echo "<script>alert('Failed! Try again')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    }
+}
+
+if (isset($_GET['mesure_delete'])) {
+    $m_id = $_GET['mesure_delete'];
+    $get_file_sql = "SELECT balance_sheet_file FROM mesurments WHERE lead_no ='$m_id'";
+    $results = $con->query($get_file_sql);
+    if ($results->num_rows > 0) {
+        $data = $results->fetch_all();
+        $un_mesure_file = $data[0][0];
+    }
+    $get_file_status  = "SELECT project_status FROM projects WHERE project_no='$m_id'";
+    $status_dump = $con->query($get_file_sql);
+    if ($status_dump->num_rows > 0) {
+        $data = $status_dump->fetch_all();
+        $project_status = $data[0][0];
+    }
+    $project_status = str_replace("_mesure", "", $project_status);
+    if (file_exists("../images/uploads/$un_mesure_file")) {
+        if (unlink("../images/uploads/$un_mesure_file")) {
+            $sql = "DELETE FROM mesurments WHERE lead_no='$m_id';";
+            $sql .= "UPDATE projects SET project_status='$project_status',lead_updated_at=NOW() WHERE project_no='$m_id'";
+        }
+    }
+    if ($con->multi_query($sql)) {
+        echo "<script>alert('Deleted successfully')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    } else {
+        echo "<script>alert('Failed! Try again')</script>";
+        echo "<script>window.open('index.php?projects;','_self')</script>";
+    }
+}
+
+if (isset($_POST['mom_submit'])) {
+    $user_id = $_POST['user_id'];
+    $mom_title = $_POST['mom_title'];
+    $mom_objective_arr = $_POST['mom_objective'];
+    $mom_raised_arr = $_POST['mom_raise_by'];
+    $mom_date = $_POST['mom_date'];
+
+    $insert_mom = "INSERT INTO mom VALUES ('default','$mom_title','$user_id','active','$mom_date',NOW(),NOW())";
+
+    if ($con->query($insert_mom)) {
+        $last_id = $con->insert_id;
+        if (!empty($mom_objective_arr)) {
+            for ($i = 0; $i < count($mom_objective_arr); $i++) {
+                if (!empty($mom_objective_arr[$i])) {
+                    $mom_objective = $mom_objective_arr[$i];
+                    $mom_raised = $mom_raised_arr[$i];
+                    $insert_obj = "INSERT INTO mom_objectives VALUES ('default','$last_id','$mom_objective','$mom_raised',NOW(),NOW())";
+                    $con->query($insert_obj);
+                }
+            }
+        }
+        echo "<script>alert('MOM successfully registered')</script>";
+        echo "<script>window.open('index.php?moms','_self')</script>";
+    } else {
+        echo "<script>alert('Failed! Try again')</script>";
+        echo "<script>window.open('index.php?moms','_self')</script>";
+    }
+}
+
+
+if (isset($_POST['search_submit'])) {
+    $pro_lead_num = $_POST['lead_no'];
+
+    $lead_qry = "SELECT * FROM leads WHERE lead_no='$pro_lead_num'";
+    $proj_qry = "SELECT * FROM projects WHERE project_no='$pro_lead_num'";
+    $results_proj = $con->query($proj_qry);
+    $results_lead = $con->query($lead_qry);
+    if ($results_proj->num_rows > 0) {
+        echo "<script>window.open('index.php?project_flow=$pro_lead_num','_self')</script>";
+    } elseif ($results_lead->num_rows > 0) {
+        echo "<script>window.open('index.php?lead_flow=$pro_lead_num','_self')</script>";
+    } else {
+        echo "<script>alert('Enter the correct number')</script>";
+        echo "<script>history.go(-1)</script>";
+    }
+}
+
+if (isset($_GET['delete_mom'])) {
+    $mom_id = $_GET['delete_mom'];
+
+    $d_sql = "DELETE FROM mom where mom_id='$mom_id';";
+    $d_sql .= "DELETE FROM mom_objectives where mom_id='$mom_id'";
+
+    if ($con->multi_query($d_sql)) {
+        echo "<script>alert('Deleted Successfully')</script>";
+        echo "<script>window.open('index.php?moms','_self')</script>";
+    } else {
+        echo "<script>alert('Delete failed ! Try again')</script>";
+        echo "<script>history.go(-1)</script>";
+    }
+}

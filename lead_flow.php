@@ -1,4 +1,10 @@
-<?php $lead_data = get_lead_complete("'design_pending','approval_pending','design_approved'", $_GET['lead_flow']) ?>
+<?php
+if (!empty(get_lead_complete("'design_pending','approval_pending','design_approved'", $_GET['lead_flow']))) {
+    $lead_data = get_lead_complete("'design_pending','approval_pending','design_approved'", $_GET['lead_flow']);
+} else {
+    echo "<script>window.open('index.php','_self')</script>";
+}
+?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Lead Flow - <?php echo $lead_data[0][0]; ?></h1>
     <a href="index.php?leads" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list fa-sm text-white-50"></i> Leads</a>

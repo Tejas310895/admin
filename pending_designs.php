@@ -1,7 +1,6 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">PENDING FOR DESIGNS</h1>
-    <a href="index.php?insert_user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-100"></i> ADD NEW</a>
 </div>
 
 <!-- DataTales Example -->
@@ -20,34 +19,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <?php $counter = 0;
-                        foreach (get_leads('design_pending') as $values) { ?>
-                    <tr>
-                        <td><?php echo $values[1]; ?></td>
-                        <td><?php echo $values[4]; ?></td>
-                        <td><?php if ($values[2] == 'standard_lead') {
-                                echo "Standard Lead";
-                            } elseif ($values[2] == 'enterprise_lead') {
-                                echo "Enterprise Lead";
-                            } elseif ($values[2] == 'modular_lead') {
-                                echo "Modular Lead";
-                            } ?></td>
-                        <td><?php if ($values[3] == 'design_build') {
-                                echo "Design & Build";
-                            } elseif ($values[3] == 'only_build') {
-                                echo "Build";
-                            } ?>
-                        </td>
-                        <td><?php echo get_past_days($values[7]); ?></td>
-                        <td>
-                            <a href="index.php?design_upload=<?php echo $values[1]; ?>" class="btn btn-info btn-circle btn-sm">
-                                <i class="fas fa-info"></i>
-                            </a>
-                        </td>
+                    <?php $counter = 0;
+                    foreach (get_leads('design_pending') as $values) { ?>
+                        <tr>
+                            <td><?php echo $values[1]; ?></td>
+                            <td><?php echo $values[4]; ?></td>
+                            <td><?php if ($values[2] == 'standard_lead') {
+                                    echo "Standard Lead";
+                                } elseif ($values[2] == 'enterprise_lead') {
+                                    echo "Enterprise Lead";
+                                } elseif ($values[2] == 'modular_lead') {
+                                    echo "Modular Lead";
+                                } ?></td>
+                            <td><?php if ($values[3] == 'design_build') {
+                                    echo "Design & Build";
+                                } elseif ($values[3] == 'only_build') {
+                                    echo "Build";
+                                } ?>
+                            </td>
+                            <td><?php echo get_past_days($values[7]); ?></td>
+                            <td>
+                                <a href="index.php?design_upload=<?php echo $values[1]; ?>" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php } ?>
                     </tr>
-                <?php } ?>
-                </tr>
                 </tbody>
             </table>
         </div>
