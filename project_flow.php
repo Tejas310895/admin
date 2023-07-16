@@ -136,26 +136,31 @@ if (!empty(get_project_complete($_GET['project_flow']))) {
                                 </td>
                             </tr>
                         <?php } ?>
-                        <?php foreach (get_docs($lead_data[0][0], 'mesurments') as $vals) { ?>
-                            <tr>
+                        <?php //foreach (get_docs($lead_data[0][0], 'mesurments') as $vals) { 
+                        ?>
+                        <!-- <tr>
                                 <td>Mesurments</td>
-                                <td><?php echo get_sql_single_data('user_name', 'users', "user_id='$vals[4]'")[0][0]; ?></td>
+                                <td><?php //echo get_sql_single_data('user_name', 'users', "user_id='$vals[4]'")[0][0]; 
+                                    ?></td>
                                 <td>
-                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
+                                    <a href="https://images.ssarchindia.com/uploads/<?php //echo $vals[2]; 
+                                                                                    ?>" target="_blank" class="btn btn-info btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-pen-fancy"></i>
                                         </span>
                                         <span class="text">Open Mesurment</span>
                                     </a>
-                                    <a href="ajax_submit.php?mesure_delete=<?php echo $vals[3]; ?>" target="_blank" class="btn btn-danger btn-icon-split">
+                                    <a href="ajax_submit.php?mesure_delete=<?php //echo $vals[3]; 
+                                                                            ?>" target="_blank" class="btn btn-danger btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-trash"></i>
                                         </span>
                                         <span class="text">delete</span>
                                     </a>
                                 </td>
-                            </tr>
-                        <?php } ?>
+                            </tr> -->
+                        <?php //} 
+                        ?>
 
                     </tbody>
                 </table>
