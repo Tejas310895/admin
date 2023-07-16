@@ -26,7 +26,7 @@
     <li class="nav-item">
         <a class="nav-link" href="index.php?project_enquiry">
             <i class="fa fa-comments"></i>
-            <span>EQUIRIES</span></a>
+            <span>ENQUIRIES</span></a>
     </li>
 
     <!-- Nav Item - PROJECT IN -->
