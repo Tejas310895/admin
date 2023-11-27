@@ -17,6 +17,12 @@ if (isset($_POST['insert__form'])) {
     } else {
         echo 0;
     }
+
+    if ($_SERVER['HTTP_HOST'] == 'localhost') {
+        $assets_url = '../uploads/';
+    } else {
+        $assets_url = '../images/uploads/';
+    }
 }
 
 if (isset($_POST['c_email'])) {
@@ -103,19 +109,20 @@ if (isset($_POST['submit_lead'])) {
 }
 
 if (isset($_POST['design_submit'])) {
-    $target_dir = "../images/uploads/";
+    $target_dir = $assets_url;
     $design_file_name =  "D_" . random_int(10000000, 99999999) . basename($_FILES["design_file"]["name"]);
     $estimation_file_name =  "E_" . random_int(10000000, 99999999) . basename($_FILES["estimation_file"]["name"]);
     $design_file = $target_dir . $design_file_name;
     $estimation_file = $target_dir . $estimation_file_name;
     $design_note = $_POST['design_note'];
+    $amount = $_POST['amount'];
     $design_lead_no = $_POST['lead_no'];
     $design_check = $_FILES["design_file"]["tmp_name"];
     $estimation_check = $_FILES["estimation_file"]["tmp_name"];
     if (!empty($design_check) && !empty($estimation_check)) {
         if (move_uploaded_file($_FILES["design_file"]["tmp_name"], $design_file) && move_uploaded_file($_FILES["estimation_file"]["tmp_name"], $estimation_file)) {
 
-            $sql = "INSERT INTO designs_estimations VALUES ('default','$design_lead_no','$design_file_name','$estimation_file_name','pending',1,NOW(),NOW());";
+            $sql = "INSERT INTO designs_estimations VALUES ('default','$design_lead_no','$design_file_name','$estimation_file_name','$amount','pending',1,NOW(),NOW());";
             $sql .= "UPDATE leads SET lead_status='approval_pending',lead_updated_at=NOW() WHERE lead_no='$design_lead_no'";
 
             if ($con->multi_query($sql)) {
@@ -250,8 +257,8 @@ if (isset($_POST['balance_submit'])) {
 }
 
 if (isset($_POST['expense_submit'])) {
-    $user_id = $_SESSION['user'];
-    $target_dir = "../images/uploads/";
+    $user_id = $_POST['entered_by'];
+    $target_dir = $assets_url;
     $e_project_no = $_POST['project_no'];
     $e_expense_type = $_POST['expense_type'];
     $e_expense_amt = $_POST['expense_amt'];
@@ -458,5 +465,39 @@ if (isset($_GET['delete_mom'])) {
     } else {
         echo "<script>alert('Delete failed ! Try again')</script>";
         echo "<script>history.go(-1)</script>";
+    }
+}
+if (isset($_GET['delete_expenses'])) {
+    $p_exp_id = $_GET['delete_expenses'];
+
+    $d_sql = "DELETE FROM project_expenses where p_exp_id='$p_exp_id'";
+
+    if ($con->multi_query($d_sql)) {
+        echo "<script>alert('Deleted Successfully')</script>";
+        echo "<script>window.open('index.php?project_expenses','_self')</script>";
+    } else {
+        echo "<script>alert('Delete failed ! Try again')</script>";
+        echo "<script>history.go(-1)</script>";
+    }
+}
+
+if (isset($_POST['enquiry_submit'])) {
+    $sql1 = "SELECT enquiry_id FROM project_enquiries ORDER BY enquiry_id DESC LIMIT 1";
+    $results = $con->query($sql1);
+    if ($results->num_rows > 0) {
+        $application_no =  "SSAR" . random_int(10000000, 99999999) . $results->fetch_assoc()['enquiry_id'];
+    }
+    $c_name = $_POST['customer_name'];
+    $c_contact = $_POST['customer_contact'];
+    $c_email = $_POST['customer_email'];
+    $c_desc = $_POST['customer_desc'];
+
+    $sql = "INSERT INTO project_enquiries VALUES ('default','$application_no','$c_name','$c_email','$c_contact','$c_desc','initiated',NOW(),NOW())";
+    if ($con->query($sql)) {
+        echo "<script>alert('Your enquiry is submitted successfully')</script>";
+        echo "<script>window.open('index.php?project_enquiry','_self')</script>";
+    } else {
+        echo "<script>alert('Failed to submit enquiry! Try again'))</script>";
+        echo "<script>window.open('index.php?project_enquiry','_self')</script>";
     }
 }

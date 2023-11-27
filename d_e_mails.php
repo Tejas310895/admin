@@ -1,11 +1,18 @@
 <?php
 include("functions.php");
+
+if ($_SERVER['HTTP_HOST'] == 'localhost') {
+  $assets_url = '../uploads/';
+} else {
+  $assets_url = '../images/uploads/';
+}
+
 if (isset($_GET['d_e_status'])) {
   $lead_no = $_GET['design_status_id'];
   $attachment_files = get_design_files($lead_no);
   $user_details = get_sql_single_data("c_name,c_email", "project_enquiries", "application_no='$lead_no'");
-  $design_file = "../uploads/" . $attachment_files[0][0];
-  $estimation_file = "../uploads/" . $attachment_files[0][1];
+  $design_file = $assets_url . $attachment_files[0][0];
+  $estimation_file = $assets_url . $attachment_files[0][1];
 ?>
 
   <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

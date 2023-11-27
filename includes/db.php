@@ -6,7 +6,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $username = "root";
     $password = "";
     $database = "ssarch";
-    $port = 3308;
+    $port = 3306;
 } else {
     $host = "localhost";
     $username = "u404775056_ssarch";

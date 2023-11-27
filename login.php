@@ -92,13 +92,23 @@ if (isset($_POST['login'])) {
     $results = $con->query($sql);
     if ($results->num_rows > 0) {
         $u_data = $results->fetch_assoc();
-        if (password_verify($user_p, $u_data['user_pass'])) {
-            session_start();
-            $_SESSION['user'] = $u_data['user_id'];
-            echo "<script>alert('Login Successfull')</script>";
-            echo "<script>window.open('index.php?dashboard','_self')</script>";
+        if ($u_data['user_role'] !== 'site_incharge' && $u_data['user_role'] !== 'site_staff') {
+            if ($u_data['user_status'] == 'active') {
+                if (password_verify($user_p, $u_data['user_pass'])) {
+                    session_start();
+                    $_SESSION['user'] = $u_data['user_id'];
+                    echo "<script>alert('Login Successfull')</script>";
+                    echo "<script>window.open('index.php?dashboard','_self')</script>";
+                } else {
+                    echo "<script>alert('Invalid Password')</script>";
+                    echo "<script>window.open('login.php','_self')</script>";
+                }
+            } else {
+                echo "<script>alert('You are locked or inactive contact admin')</script>";
+                echo "<script>window.open('login.php','_self')</script>";
+            }
         } else {
-            echo "<script>alert('Invalid Password')</script>";
+            echo "<script>alert('Please login to field site')</script>";
             echo "<script>window.open('login.php','_self')</script>";
         }
     } else {

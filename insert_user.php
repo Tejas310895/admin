@@ -30,6 +30,8 @@
                     <option value="project_lead">Project Lead</option>
                     <option value="design_lead">Designer</option>
                     <option value="accounts_lead">Accounts</option>
+                    <option value="site_incharge">Site Incharge</option>
+                    <option value="site_staff">Site Staff</option>
                 </select>
             </div>
         </div>

@@ -72,6 +72,7 @@
                         <tr>
                             <th> Designs </th>
                             <th> Estimations </th>
+                            <th> Amount </th>
                             <th> Note </th>
                             <th> Actions </th>
                         </tr>
@@ -91,6 +92,9 @@
                                         <span class="label label-info">Upload Estimation file below</span>
                                         <input class="form-control" type="file" id="formFile" name="estimation_file">
                                     </div>
+                                </td>
+                                <td>
+                                    <input type="number" id="input" class="form-control mt-4" placeholder="Enter Amount" name="amount" required="required">
                                 </td>
                                 <td>
                                     <input type="text" id="input" class="form-control mt-4" placeholder="Enter Your Note" name="design_note" required="required">

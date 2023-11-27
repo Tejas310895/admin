@@ -35,7 +35,11 @@
                             </td>
                             <td><?php echo $vals[3]; ?></td>
                             <td><?php echo date("d-m-Y", strtotime($vals[7])); ?></td>
-                            <td></td>
+                            <td>
+                                <a href="ajax_submit.php?delete_expenses=<?php echo $vals[0]; ?>" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>

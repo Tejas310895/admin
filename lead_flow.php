@@ -72,60 +72,59 @@ if (!empty(get_lead_complete("'design_pending','approval_pending','design_approv
                     </thead>
                     <tbody>
                         <?php foreach (get_designs($lead_data[0][0]) as $vals) { ?>
-                            <tr>
-                                <td><?php echo get_sql_single_data('user_name', 'users', "user_id='$vals[5]'")[0][0]; ?></td>
-                                <td>
-                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
+                            <td><?php echo get_sql_single_data('user_name', 'users', "user_id='$vals[6]'")[0][0]; ?></td>
+                            <td>
+                                <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-pen-fancy"></i>
+                                    </span>
+                                    <span class="text">Open design</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-primary btn-icon-split">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </span>
+                                    <span class="text">Open estimation</span>
+                                </a>
+                            </td>
+                            <td>
+                                <?php if ($vals[4] == 'pending') { ?>
+                                    <a href="d_e_mails.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=approved" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white">
-                                            <i class="fas fa-pen-fancy"></i>
+                                            <i class="fas fa-check"></i>
                                         </span>
-                                        <span class="text">Open design</span>
+                                        <span class="text">Approve</span>
                                     </a>
-                                </td>
-                                <td>
-                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-primary btn-icon-split">
+                                    <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=pending" class="btn btn-danger btn-icon-split">
                                         <span class="icon text-white">
-                                            <i class="fas fa-dollar-sign"></i>
+                                            <i class="fas fa-exclamation-circle"></i>
                                         </span>
-                                        <span class="text">Open estimation</span>
+                                        <span class="text">Rework</span>
                                     </a>
-                                </td>
-                                <td>
-                                    <?php if ($vals[4] == 'pending') { ?>
-                                        <a href="d_e_mails.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=approved" class="btn btn-success btn-icon-split">
-                                            <span class="icon text-white">
-                                                <i class="fas fa-check"></i>
-                                            </span>
-                                            <span class="text">Approve</span>
-                                        </a>
-                                        <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=pending" class="btn btn-danger btn-icon-split">
-                                            <span class="icon text-white">
-                                                <i class="fas fa-exclamation-circle"></i>
-                                            </span>
-                                            <span class="text">Rework</span>
-                                        </a>
-                                    <?php } elseif ($vals[4] == 'approved') { ?>
-                                        <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=finalize" class="btn btn-success btn-icon-split">
-                                            <span class="icon text-white">
-                                                <i class="fas fa-check"></i>
-                                            </span>
-                                            <span class="text">Finalize</span>
-                                        </a>
-                                        <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=pending" class="btn btn-danger btn-icon-split">
-                                            <span class="icon text-white">
-                                                <i class="fas fa-exclamation-circle"></i>
-                                            </span>
-                                            <span class="text">Rework</span>
-                                        </a>
-                                    <?php } else { ?>
-                                        <a href="project_flow.php?design_status_id=<?php echo $vals[1]; ?>" class="btn btn-danger btn-icon-split">
-                                            <span class="icon text-white">
-                                                <i class="fas fa-cogs"></i>
-                                            </span>
-                                            <span class="text">Open Project</span>
-                                        </a>
-                                    <?php } ?>
-                                </td>
+                                <?php } elseif ($vals[4] == 'approved') { ?>
+                                    <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=finalize" class="btn btn-success btn-icon-split">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="text">Finalize</span>
+                                    </a>
+                                    <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=pending" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </span>
+                                        <span class="text">Rework</span>
+                                    </a>
+                                <?php } else { ?>
+                                    <a href="project_flow.php?design_status_id=<?php echo $vals[1]; ?>" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white">
+                                            <i class="fas fa-cogs"></i>
+                                        </span>
+                                        <span class="text">Open Project</span>
+                                    </a>
+                                <?php } ?>
+                            </td>
                             </tr>
                         <?php } ?>
                     </tbody>

@@ -43,17 +43,17 @@
                             </td>
                             <?php
                             $status = "";
-                            if (strpos($values[5], 'procur') == false) {
+                            if (@strpos($values[5], 'procur') == false) {
                                 $status .= 'Procurment ';
-                            } elseif (strpos($values[5], 'balance') == false) {
+                            } elseif (@strpos($values[5], 'balance') == false) {
                                 $status .= 'Balance ';
-                            } elseif (strpos($values[5], 'mesure') == false) {
+                            } elseif (@strpos($values[5], 'mesure') == false) {
                                 $status .= 'Mesurments ';
                             } else {
                                 $status .= 'Project Complied';
                             }
 
-                            if (strpos($values[5], 'Complied') == false) {
+                            if (@strpos($values[5], 'Complied') == false) {
                                 $status .= 'Pending';
                             }
 
@@ -64,6 +64,8 @@
                             <td>
                                 <a href="index.php?project_flow=<?php echo $values[1]; ?>" class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info"></i></a>
+                                <a href="projectSummary_pdf.php?project_id=<?php echo $values[1]; ?>" class="btn btn-primary btn-circle btn-sm">
+                                    <i class="fas fa-download"></i></a>
                             </td>
                         </tr>
                     <?php } ?>

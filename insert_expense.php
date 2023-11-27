@@ -3,6 +3,7 @@
     <a href="index.php?project_expenses" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list fa-sm text-white-50"></i> Expenses</a>
 </div>
 <form method="post" action="ajax_submit.php" enctype="multipart/form-data">
+    <input type="hidden" name="entered_by" value="<?php echo $_SESSION['user']; ?>">
     <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
             <div class="form-group">

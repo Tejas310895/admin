@@ -197,3 +197,36 @@ function get_mom_pdf($mom_id)
         return array();
     }
 }
+function get_measurements($proj_no)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM mesurments WHERE project_no='$proj_no'";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+function get_tasks($proj_no)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM tasks WHERE project_no='$proj_no'";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+function get_tasks_uploads($task_id)
+{
+    require("includes/db.php");
+    $sql = "SELECT * FROM task_uploads WHERE task_id='$task_id'";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}

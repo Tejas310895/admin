@@ -33,7 +33,13 @@
                                     echo "Design Lead";
                                 } elseif ($values[6] == 'accounts_lead') {
                                     echo "Accounts Lead";
-                                } ?></td>
+                                } elseif ($values[6] == 'site_incharge') {
+                                    echo "Site Incharge";
+                                } elseif ($values[6] == 'site_staff') {
+                                    echo "Site Staff";
+                                }
+
+                                ?></td>
                             <td>
                                 <a href="<?php echo $values[0]; ?>" class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info"></i>
