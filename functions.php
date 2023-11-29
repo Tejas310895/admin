@@ -230,3 +230,27 @@ function get_tasks_uploads($task_id)
         return array();
     }
 }
+
+function get_task_progress()
+{
+    require("includes/db.php");
+    $sql = "SELECT IF(tasks.task_status='approved',1,0) as prog FROM tasks join project_enquiries on tasks.project_no=project_enquiries.application_no where project_enquiries.enquiry_status='closed'";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+
+function get_project_progress()
+{
+    require("includes/db.php");
+    $sql = "SELECT project_enquiries.application_no as proj_id,sum(IF(tasks.task_status='approved',1,0)) as prog, count(tasks.task_status) as total_prog FROM tasks join project_enquiries on tasks.project_no=project_enquiries.application_no where project_enquiries.enquiry_status='closed' group by tasks.project_no";
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
