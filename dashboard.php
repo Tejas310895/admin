@@ -85,11 +85,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Content Row -->
-<div class="row">
-
     <!-- Content Column -->
     <div class="col-lg-12 mb-4">
 
@@ -109,6 +104,5 @@
                 </div>
             <?php } ?>
         </div>
-
     </div>
 </div>
