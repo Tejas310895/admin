@@ -49,7 +49,7 @@
                             <div class="col-auto">
                                 <?php
                                 $progress_table = array_column(get_task_progress(), 'prog');
-                                $progress = round(array_sum($progress_table) / count($progress_table) * 100);
+                                $progress = (!empty(get_task_progress())) ? (round(array_sum($progress_table) / count($progress_table) * 100)) : 0;
                                 ?>
                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $progress; ?></div>
                             </div>
