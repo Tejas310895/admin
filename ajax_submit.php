@@ -501,3 +501,17 @@ if (isset($_POST['enquiry_submit'])) {
         echo "<script>window.open('index.php?project_enquiry','_self')</script>";
     }
 }
+
+if (isset($_POST['assign_incharge'])) {
+    $site_incharge = $_POST['incharge_id'];
+    $project_no = $_POST['proj_no'];
+    $sql = "UPDATE projects SET site_incharge='$site_incharge',project_updated_at=NOW() WHERE project_no ='$project_no'";
+
+    if ($con->query($sql)) {
+        echo "<script>alert('Your project is submitted successfully')</script>";
+        echo "<script>window.open('index.php?projects','_self')</script>";
+    } else {
+        echo "<script>alert('Failed to submit project! Try again'))</script>";
+        echo "<script>window.open('index.php?projects','_self')</script>";
+    }
+}

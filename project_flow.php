@@ -6,7 +6,7 @@ if (!empty(get_project_complete($_GET['project_flow']))) {
 }
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Project Flow - <?php echo $lead_data[0][0]; ?></h1>
+    <h1 class="h3 mb-0 text-gray-800">Project Flow - <?php echo $lead_data[0][0]; ?> <small class="badge badge-primary"> Assigned To <?php echo get_sql_single_data('user_name', 'users', "user_id='" . $lead_data[0][7] . "'")[0][0]; ?></small></h1>
     <a href="index.php?projects" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list fa-sm text-white-50"></i> Projects</a>
 </div>
 <div class="row">

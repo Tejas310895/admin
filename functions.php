@@ -1,5 +1,16 @@
 <?php
 
+function commonSelect($sql)
+{
+    require("includes/db.php");
+    $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+
 function get_past_days($date)
 {
     date_default_timezone_set("Asia/Calcutta");
@@ -121,7 +132,7 @@ function get_design_files($lead_no)
 function get_project_complete($project_no)
 {
     require("includes/db.php");
-    $sql = "SELECT p.project_no,p.project_name,p.project_status,p.project_updated_at,e.c_name,e.c_contact,e.c_desc FROM projects AS p INNER JOIN project_enquiries AS e ON p.project_no=e.application_no WHERE p.project_no='$project_no'";
+    $sql = "SELECT p.project_no,p.project_name,p.project_status,p.project_updated_at,e.c_name,e.c_contact,e.c_desc,p.site_incharge FROM projects AS p INNER JOIN project_enquiries AS e ON p.project_no=e.application_no WHERE p.project_no='$project_no'";
     $results = $con->query($sql);
     if ($results->num_rows > 0) {
         return $results->fetch_all();
@@ -248,6 +259,16 @@ function get_project_progress()
     require("includes/db.php");
     $sql = "SELECT project_enquiries.application_no as proj_id,sum(IF(tasks.task_status='approved',1,0)) as prog, count(tasks.task_status) as total_prog FROM tasks join project_enquiries on tasks.project_no=project_enquiries.application_no where project_enquiries.enquiry_status='closed' group by tasks.project_no";
     $results = $con->query($sql)->fetch_all(MYSQLI_ASSOC);
+    if (!empty($results)) {
+        return $results;
+    } else {
+        return array();
+    }
+}
+function get_site_incharges()
+{
+    $sql = "SELECT user_id ,user_name FROM users WHERE user_role='site_incharge'";
+    $results = commonSelect($sql);
     if (!empty($results)) {
         return $results;
     } else {
