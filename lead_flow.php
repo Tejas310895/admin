@@ -90,7 +90,7 @@ if (!empty(get_lead_complete("'design_pending','approval_pending','design_approv
                                 </a>
                             </td>
                             <td>
-                                <?php if ($vals[6] == 'pending') { ?>
+                                <?php if ($vals[5] == 'pending') { ?>
                                     <a href="d_e_mails.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=approved" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-check"></i>
@@ -103,7 +103,7 @@ if (!empty(get_lead_complete("'design_pending','approval_pending','design_approv
                                         </span>
                                         <span class="text">Rework</span>
                                     </a>
-                                <?php } elseif ($vals[6] == 'approved') { ?>
+                                <?php } elseif ($vals[5] == 'approved') { ?>
                                     <a href="ajax_submit.php?design_status_id=<?php echo $vals[1]; ?>&d_e_status=finalize" class="btn btn-success btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-check"></i>
