@@ -30,7 +30,7 @@ function get_users($id = 'ALL')
 {
     require("includes/db.php");
     if ($id == 'ALL') {
-        $sql = "SELECT * FROM users WHERE user_role!='admin' ORDER BY user_id desc";
+        $sql = "SELECT * FROM users WHERE user_role!='admin' and user_status='active' ORDER BY user_id desc";
         $results = $con->query($sql);
         return $results->fetch_all();
     } else {

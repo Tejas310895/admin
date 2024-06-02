@@ -1,6 +1,13 @@
 <?php
 
 include("includes/db.php");
+session_start();
+
+if ($_SERVER['HTTP_HOST'] == 'localhost') {
+    $assets_url = '../uploads/';
+} else {
+    $assets_url = '../images/uploads/';
+}
 
 if (isset($_POST['insert__form'])) {
     $insert_user_data = $_POST['insert__form'];
@@ -16,12 +23,6 @@ if (isset($_POST['insert__form'])) {
         echo 1;
     } else {
         echo 0;
-    }
-
-    if ($_SERVER['HTTP_HOST'] == 'localhost') {
-        $assets_url = '../uploads/';
-    } else {
-        $assets_url = '../images/uploads/';
     }
 }
 
@@ -157,7 +158,7 @@ if (isset($_GET['design_status_id'])) {
             $lead_name = $lead_data['lead_name'];
             $sql = "UPDATE designs_estimations SET d_e_status='finalized',d_e_updated_at=NOW() WHERE lead_no='$d_e_id';";
             $sql .= "UPDATE leads SET lead_status='design_finalized',lead_updated_at=NOW() WHERE lead_no='$d_e_id';";
-            $sql .= "INSERT INTO projects VALUES ('default','$lead_no','$lead_level','$lead_type','$lead_name','project_initiated',NOW(),NOW())";
+            $sql .= "INSERT INTO projects VALUES ('default','$lead_no','$lead_level','$lead_type','$lead_name',null,'project_initiated',NOW(),NOW())";
         } else {
             die();
         }
@@ -169,8 +170,8 @@ if (isset($_GET['design_status_id'])) {
             $un_design_file = $data[0][0];
             $un_estimation_file = $data[0][1];
         }
-        if (file_exists("../images/uploads/$un_design_file") && file_exists("../images/uploads/$un_estimation_file")) {
-            if (unlink("../images/uploads/$un_design_file") && unlink("../images/uploads/$un_estimation_file")) {
+        if (file_exists($assets_url . "$un_design_file") && file_exists($assets_url . "$un_estimation_file")) {
+            if (unlink($assets_url . "$un_design_file") && unlink($assets_url . "$un_estimation_file")) {
                 $sql = "DELETE FROM designs_estimations WHERE lead_no='$d_e_id';";
                 $sql .= "UPDATE leads SET lead_status='design_pending',lead_updated_at=NOW() WHERE lead_no='$d_e_id'";
             }
@@ -223,13 +224,13 @@ if (isset($_POST['procurment_submit'])) {
 
 if (isset($_POST['balance_submit'])) {
     $user_id = $_SESSION['user'];
-    $target_dir = "../images/uploads/";
+    $target_dir = $assets_url;
     $balance_file_name =  "B_" . random_int(10000000, 99999999) . basename($_FILES["balance_file"]["name"]);
     $balance_file = $target_dir . $balance_file_name;
     $balance_note = $_POST['balance_note'];
     $balance_lead_no = $_POST['lead_no'];
     $balance_check = $_FILES["balance_file"]["tmp_name"];
-    $sql_pre = "SELECT project_status FROM projects WHERE project_no='$procurment_lead_no'";
+    $sql_pre = "SELECT project_status FROM projects WHERE project_no='$balance_lead_no'";
     $project_array = $con->query($sql_pre)->fetch_all();
     $project_status = $project_array[0][0];
     $project_status .= "_balance";
@@ -237,7 +238,7 @@ if (isset($_POST['balance_submit'])) {
         if (move_uploaded_file($_FILES["balance_file"]["tmp_name"], $balance_file)) {
 
             $sql = "INSERT INTO balance_sheets VALUES ('default','$balance_lead_no','$balance_file_name','pending','$user_id',NOW(),NOW());";
-            $sql .= "UPDATE projects SET project_status='$project_status',project_updated_at=NOW() WHERE project_no='$balance_lead_no'";
+            $sql .= "UPDATE projects SET project_status='open',project_updated_at=NOW() WHERE project_no='$balance_lead_no'";
 
             if ($con->multi_query($sql)) {
                 echo "<script>alert('Files uploaded succesfully')</script>";
@@ -348,31 +349,23 @@ if (isset($_GET['procur_delete'])) {
 
 if (isset($_GET['balance_delete'])) {
     $b_id = $_GET['balance_delete'];
-    $get_file_sql = "SELECT balance_sheet_file FROM balance_sheets WHERE lead_no ='$b_id'";
+    $get_file_sql = "SELECT * FROM balance_sheets WHERE b_s_id ='$b_id'";
     $results = $con->query($get_file_sql);
     if ($results->num_rows > 0) {
-        $data = $results->fetch_all();
-        $un_balance_file = $data[0][0];
+        $data = $results->fetch_assoc();
+        $un_balance_file = $data['balance_sheet_file'];
     }
-    $get_file_status  = "SELECT project_status FROM projects WHERE project_no='$b_id'";
-    $status_dump = $con->query($get_file_sql);
-    if ($status_dump->num_rows > 0) {
-        $data = $status_dump->fetch_all();
-        $project_status = $data[0][0];
-    }
-    $project_status = str_replace("_balance", "", $project_status);
-    if (file_exists("../images/uploads/$un_balance_file")) {
-        if (unlink("../images/uploads/$un_balance_file")) {
-            $sql = "DELETE FROM balance_sheets WHERE lead_no='$b_id';";
-            $sql .= "UPDATE projects SET project_status='$project_status',lead_updated_at=NOW() WHERE project_no='$b_id'";
+    if (file_exists($assets_url . $un_balance_file)) {
+        if (unlink($assets_url . $un_balance_file)) {
+            $sql = "DELETE FROM balance_sheets WHERE b_s_id='$b_id'";
+            if ($con->query($sql)) {
+                echo "<script>alert('Deleted successfully')</script>";
+                echo "<script>window.open('index.php?projects','_self')</script>";
+            } else {
+                echo "<script>alert('Failed! Try again')</script>";
+                echo "<script>window.open('index.php?projects','_self')</script>";
+            }
         }
-    }
-    if ($con->multi_query($sql)) {
-        echo "<script>alert('Deleted successfully')</script>";
-        echo "<script>window.open('index.php?projects;','_self')</script>";
-    } else {
-        echo "<script>alert('Failed! Try again')</script>";
-        echo "<script>window.open('index.php?projects;','_self')</script>";
     }
 }
 

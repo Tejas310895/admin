@@ -6,7 +6,7 @@ if (!empty(get_project_complete($_GET['project_flow']))) {
 }
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Project Flow - <?php echo $lead_data[0][0]; ?> <small class="badge badge-primary"> Assigned To <?php echo get_sql_single_data('user_name', 'users', "user_id='" . $lead_data[0][7] . "'")[0][0]; ?></small></h1>
+    <h1 class="h3 mb-0 text-gray-800">Project Flow - <?php echo $lead_data[0][0]; ?> <small class="badge badge-primary"> <?php echo $lead_data[0][7] != null ? 'Assigned To ' . (get_sql_single_data('user_name', 'users', "user_id='" . $lead_data[0][7] . "'")[0][0]) : 'Not Assigned'; ?></small></h1>
     <a href="index.php?projects" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-list fa-sm text-white-50"></i> Projects</a>
 </div>
 <div class="row">
@@ -87,12 +87,6 @@ if (!empty(get_project_complete($_GET['project_flow']))) {
                                         </span>
                                         <span class="text">Open estimation</span>
                                     </a>
-                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-danger btn-icon-split">
-                                        <span class="icon text-white">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                        <span class="text">delete</span>
-                                    </a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -121,13 +115,13 @@ if (!empty(get_project_complete($_GET['project_flow']))) {
                                 <td>Balance Sheet</td>
                                 <td><?php echo get_sql_single_data('user_name', 'users', "user_id='$vals[4]'")[0][0]; ?></td>
                                 <td>
-                                    <a href="ajax_submit.php?balance_delete=<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
+                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[2]; ?>" target="_blank" class="btn btn-info btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-pen-fancy"></i>
                                         </span>
                                         <span class="text">Open Balance Sheet</span>
                                     </a>
-                                    <a href="https://images.ssarchindia.com/uploads/<?php echo $vals[3]; ?>" target="_blank" class="btn btn-danger btn-icon-split">
+                                    <a href="ajax_submit.php?balance_delete=<?php echo $vals[0]; ?>" class="btn btn-danger btn-icon-split">
                                         <span class="icon text-white">
                                             <i class="fas fa-trash"></i>
                                         </span>

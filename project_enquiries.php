@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Mobile Number</label>
-                                    <input type="number" class="form-control" name="customer_contact" id="exampleFormControlInput1" placeholder="Enter Number" required>
+                                    <input type="number" class="form-control" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="customer_contact" id="exampleFormControlInput1" placeholder="Enter Number" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Email</label>

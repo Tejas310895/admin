@@ -41,9 +41,6 @@
 
                                 ?></td>
                             <td>
-                                <a href="<?php echo $values[0]; ?>" class="btn btn-info btn-circle btn-sm">
-                                    <i class="fas fa-info"></i>
-                                </a>
                                 <a href="index.php?edit_user=<?php echo $values[0]; ?>" class="btn btn-primary btn-circle btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
